@@ -4,3 +4,4 @@ tensorflow
 protobuf
 streamlit
 PIL
+python==3.7.16
