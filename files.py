@@ -2,9 +2,14 @@ import streamlit as st
 from keras.models import load_model
 import numpy as np
 from PIL import Image
+from keras.metrics import mean_absolute_error
 
 
-model = load_model('Age_Sex_detection.h5')
+custom_objects = {
+    'mae': mean_absolute_error  
+}
+
+model = load_model('Age_Sex_detection.h5',custom_objects=custom_objects)
 
 def preprocess_image(image):
     image = image.convert('RGB')  
