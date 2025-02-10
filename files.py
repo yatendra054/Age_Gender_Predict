@@ -1,15 +1,13 @@
 import streamlit as st
 from keras.models import load_model
+import tensorflow as tf
 import numpy as np
-from PIL import Image
+from PIL import Image,ImageOps
 from keras.metrics import mean_absolute_error
 
 
-custom_objects = {
-    'mae': mean_absolute_error  
-}
 
-model = load_model('Age_Sex_detection.h5',custom_objects=custom_objects)
+model = load_model('Age_Sex_detection.h5')
 
 def preprocess_image(image):
     image = image.convert('RGB')  
@@ -35,6 +33,7 @@ uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "png", "jpe
 
 if uploaded_image is not None:
     image = Image.open(uploaded_image)
+    image=ImageOps.exif_transpose(image)
     st.image(image, caption='Uploaded Image', use_column_width=False,width=250)
     age, gender = predict_age_gender(image)
 
